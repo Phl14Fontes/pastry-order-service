@@ -3,19 +3,25 @@ package com.mba.orderservice.application.mapper;
 import com.mba.orderservice.application.dto.FriedPastryDto;
 import com.mba.orderservice.application.dto.request.CreateOrderRequestDto;
 import com.mba.orderservice.application.exception.BadRequestException;
+import com.mba.orderservice.domain.enums.OrderStatus;
 import com.mba.orderservice.domain.model.FriedPastry;
 import com.mba.orderservice.domain.model.Order;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderMapper {
+@Slf4j
+public class DtoModelMapper {
 
-    public static Order toModel(CreateOrderRequestDto dto) {
+    public static Order toCreateOrderModel(CreateOrderRequestDto dto) {
         validate(dto);
 
-        List<FriedPastry> friedPastries = toFriedPastryModelList(dto.getOrder());
+        List<FriedPastry> friedPastries = toFriedPastryModelList(dto.getFriedPastries());
+        Float totalAmount = calculateTotalAmount(friedPastries);
+        log.info(totalAmount.toString());
 
-        return new Order(dto.getName(), dto.getPaymentMethod(), dto.getStatus(), friedPastries, dto.getTotalAmount());
+        return new Order(dto.getName(), dto.getPaymentMethod(), OrderStatus.IN_PROGRESS, friedPastries, totalAmount);
     }
 
     private static List<FriedPastry> toFriedPastryModelList(List<FriedPastryDto> dtoList) {
@@ -31,6 +37,12 @@ public class OrderMapper {
 
     private static void validate(CreateOrderRequestDto dto) {
         if (dto == null) throw new BadRequestException("Create order request dto cannot be null");
-        if (dto.getOrder().isEmpty()) throw new BadRequestException("Order cannot be empty");
+        if (dto.getFriedPastries().isEmpty()) throw new BadRequestException("Order cannot be empty");
+    }
+
+    private static Float calculateTotalAmount(List<FriedPastry> friedPastries) {
+        return friedPastries.stream()
+                .map(friedPastry -> friedPastry.getAmount() * friedPastry.getQuantity())
+                .reduce(0.0F, Float::sum);
     }
 }

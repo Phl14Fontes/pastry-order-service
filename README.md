@@ -7,3 +7,4 @@ Stack and architecture notes:
 * Java 21
 * Spring Boot 3
 * Hexagonal Architecture
+* Docker Compose to local execution

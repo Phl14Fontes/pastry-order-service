@@ -13,10 +13,10 @@ import lombok.ToString;
 public class FriedPastry {
     Flavor flavor;
     Integer quantity;
-    Double amount;
+    Float amount;
     String observations;
 
-    public FriedPastry(Flavor flavor, Integer quantity, Double amount) {
+    public FriedPastry(Flavor flavor, Integer quantity, Float amount) {
         this.flavor = flavor;
         this.quantity = quantity;
         this.amount = amount;

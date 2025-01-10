@@ -1,0 +1,52 @@
+package com.mba.orderservice.infrastructure.adapter.out.repository.entity;
+
+import com.mba.orderservice.domain.enums.Flavor;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString(exclude = {"id"})
+@Entity(name = "order_items")
+public class FriedPastryEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank
+    @Size(min = 26, max = 26)
+    private String correlationId;
+
+    @NotNull
+    @Enumerated(value = EnumType.STRING)
+    Flavor flavor;
+
+    @NotNull
+    @Positive
+    Integer quantity;
+
+    @NotNull
+    Float amount;
+    String observations;
+
+    public FriedPastryEntity(String correlationId, Flavor flavor, Integer quantity, Float amount, String observations) {
+        this.correlationId = correlationId;
+        this.flavor = flavor;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.observations = observations;
+    }
+
+    public FriedPastryEntity(String correlationId, Flavor flavor, Integer quantity, Float amount) {
+        this.correlationId = correlationId;
+        this.flavor = flavor;
+        this.quantity = quantity;
+        this.amount = amount;
+    }
+}

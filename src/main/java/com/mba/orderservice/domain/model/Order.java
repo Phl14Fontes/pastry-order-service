@@ -17,16 +17,16 @@ public class Order {
     String name;
     PaymentMethod paymentMethod;
     OrderStatus status;
-    List<FriedPastry> order;
-    Double totalAmount;
+    List<FriedPastry> friedPastries;
+    Float totalAmount;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;
 
-    public Order(String name, PaymentMethod paymentMethod, OrderStatus status, List<FriedPastry> order, Double totalAmount) {
+    public Order(String name, PaymentMethod paymentMethod, OrderStatus status, List<FriedPastry> friedPastries, Float totalAmount) {
         this.name = name;
         this.paymentMethod = paymentMethod;
         this.status = status;
-        this.order = order;
+        this.friedPastries = friedPastries;
         this.totalAmount = totalAmount;
     }
 }
