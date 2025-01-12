@@ -1,0 +1,49 @@
+name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      - name: Install Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
+      - name: Start PostgreSQL with Docker Compose
+        run: |
+          docker-compose -f docker/docker-compose.yaml up -d
+        working-directory: docker
+
+      # 5. Build do projeto com Gradle
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      # 6. Executar testes (opcional)
+      - name: Run Tests
+        run: ./gradlew test
+
+      # 7. Executar a aplicação Spring Boot
+      - name: Start Spring Boot Application
+        run: ./gradlew bootRun
+
+      # 8. Derrubar os serviços Docker Compose (opcional)
+      - name: Stop Docker Compose
+        if: always()
+        run: |
+          docker-compose -f docker/docker-compose.yaml down
+        working-directory: docker
