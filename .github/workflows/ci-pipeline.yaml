@@ -31,7 +31,7 @@ jobs:
       - name: Start PostgreSQL with Docker Compose
         run: |
           docker-compose -f docker/docker-compose.yaml up -d
-        working-directory: docker
+        working-directory: ./docker
       - name: Build with Gradle
         run: ./gradlew clean build
       - name: Run Tests
@@ -42,4 +42,4 @@ jobs:
         if: always()
         run: |
           docker-compose -f docker/docker-compose.yaml down
-        working-directory: docker
+        working-directory: ./docker
