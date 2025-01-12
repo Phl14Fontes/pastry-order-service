@@ -26,9 +26,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y docker-compose
       - name: Verify Docker Compose installation
         run: docker-compose --version
+      - name: List files in the docker directory
+        run: ls -l docker/
       - name: Start PostgreSQL with Docker Compose
         run: |
-          docker-compose -f pastry-order-service/docker/docker-compose.yaml up -d
+          docker-compose -f docker/docker-compose.yaml up -d
         working-directory: docker
       - name: Build with Gradle
         run: ./gradlew clean build
