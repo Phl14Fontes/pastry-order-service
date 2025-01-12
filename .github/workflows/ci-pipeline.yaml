@@ -17,6 +17,8 @@ jobs:
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Give execute permission to gradlew
+        run: chmod +x gradlew
       - name: List all files in the repository
         run: ls -R
       - name: Set up JDK
