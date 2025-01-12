@@ -12,14 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class DtoModelMapper {
+public class DtoToModelMapper {
 
     public static Order toCreateOrderModel(CreateOrderRequestDto dto) {
         validate(dto);
 
         List<FriedPastry> friedPastries = toFriedPastryModelList(dto.getFriedPastries());
         Float totalAmount = calculateTotalAmount(friedPastries);
-        log.info(totalAmount.toString());
 
         return new Order(dto.getName(), dto.getPaymentMethod(), OrderStatus.IN_PROGRESS, friedPastries, totalAmount);
     }
@@ -28,7 +27,7 @@ public class DtoModelMapper {
         List<FriedPastry> friedPastries = new ArrayList<>();
 
         for (FriedPastryDto dto : dtoList) {
-            FriedPastry friedPastry = new FriedPastry(dto.getFlavor(), dto.getQuantity(), dto.getAmount(), dto.getObservations());
+            FriedPastry friedPastry = new FriedPastry(dto.getFlavor(), dto.getQuantity(), dto.getCorrelationId(), dto.getAmount(), dto.getObservations());
             friedPastries.add(friedPastry);
         }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ModelEntityMapper {
 
-    public static OrderEntity orderModelToEntity(Order order) {
+    public static OrderEntity orderToEntity(Order order) {
         return new OrderEntity(
                 order.getName(),
                 order.getCorrelationId(),
@@ -19,6 +19,32 @@ public class ModelEntityMapper {
                 order.getTotalAmount()
         );
     }
+
+    public static Order entityToOrder(OrderEntity entity) {
+        if (entity.getUpdatedAt() == null) {
+            return new Order(
+                    entity.getCorrelationId(),
+                    entity.getName(),
+                    entity.getPaymentMethod(),
+                    entity.getStatus(),
+                    new ArrayList<>(),
+                    entity.getTotalAmount(),
+                    entity.getCreatedAt()
+            );
+        } else {
+            return new Order(
+                    entity.getCorrelationId(),
+                    entity.getName(),
+                    entity.getPaymentMethod(),
+                    entity.getStatus(),
+                    new ArrayList<>(),
+                    entity.getTotalAmount(),
+                    entity.getCreatedAt(),
+                    entity.getUpdatedAt()
+            );
+        }
+    }
+
 
     public static List<FriedPastryEntity> friedPastriesModelToEntityList(List<FriedPastry> friedPastries, String correlationId) {
         return friedPastries.stream()

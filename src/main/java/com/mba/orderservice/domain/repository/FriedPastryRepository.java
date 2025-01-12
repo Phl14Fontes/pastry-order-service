@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface FriedPastryRepository {
     List<FriedPastry> saveOrderItems(List<FriedPastry> friedPastries, String correlationId);
+    List<FriedPastry> getAll();
+    List<FriedPastry> getBy(String correlationId);
 }

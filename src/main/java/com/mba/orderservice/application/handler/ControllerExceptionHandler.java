@@ -1,9 +1,9 @@
 package com.mba.orderservice.application.handler;
 
 import com.mba.orderservice.application.exception.BadRequestException;
-import com.mba.orderservice.infrastructure.adapter.out.exception.DatabaseSaveOrderException;
-import com.mba.orderservice.infrastructure.adapter.out.exception.DatabaseSaveOrderItemsException;
-import com.mba.orderservice.infrastructure.adapter.out.exception.NullFieldException;
+import com.mba.orderservice.application.exception.OrderNotFoundException;
+import com.mba.orderservice.application.exception.UnprocessableEntityException;
+import com.mba.orderservice.infrastructure.adapter.out.exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,29 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(RuntimeException ex) {
+        String errorMessage = ex.getMessage();
+
+        logger.error(errorMessage);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+    }
+
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<String> handleUnprocessableEntity(RuntimeException ex) {
+        String errorMessage = ex.getMessage();
+
+        logger.error(errorMessage);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorMessage);
+    }
+
     @ExceptionHandler({
             NullFieldException.class,
             DatabaseSaveOrderException.class,
-            DatabaseSaveOrderItemsException.class
+            DatabaseSaveOrderItemsException.class,
+            DatabaseGetOrderException.class,
+            DatabaseGetOrderItemsException.class,
+            DatabaseUpdateOrderStatusException.class
     })
     public ResponseEntity<String> handleInternalServerError(RuntimeException ex) {
         String errorMessage = ex.getMessage();

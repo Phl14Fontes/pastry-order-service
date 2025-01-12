@@ -20,6 +20,14 @@ public class FriedPastryService {
         repository.saveOrderItems(friedPastries, correlationId);
     }
 
+    public List<FriedPastry> getAll() {
+        return repository.getAll();
+    }
+
+    public List<FriedPastry> getBy(String correlationId) {
+        return repository.getBy(correlationId);
+    }
+
     private void validate(List<FriedPastry> friedPastries, String correlationId) {
         if (friedPastries == null || friedPastries.isEmpty()) throw new NullFieldException("Fried pastries list cannot be null or empty");
         if (correlationId == null) throw new NullFieldException("Correlation Id cannot be null");
