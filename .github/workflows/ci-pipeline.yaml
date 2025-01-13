@@ -15,33 +15,51 @@ jobs:
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Give execute permission to gradlew
         run: chmod +x gradlew
+
       - name: List all files in the repository
         run: ls -R
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'corretto'
+
       - name: Install Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
+
       - name: Verify Docker Compose installation
         run: docker-compose --version
+
       - name: List files in the docker directory
         run: ls -l docker/
+
       - name: Start PostgreSQL with Docker Compose
         run: |
           docker-compose -f docker-compose.yaml up -d
         working-directory: ./docker
+
       - name: Build with Gradle
         run: ./gradlew clean build
+
       - name: Run Tests
         run: ./gradlew test
-      - name: Start Spring Boot Application
-        run: ./gradlew bootRun
+
+      - name: Start Spring Boot Application in Background
+        run: |
+            nohup ./gradlew bootRun &
+            echo $! > springboot.pid
+
+      - name: Stop Spring Boot Application
+        run: |
+            kill $(cat springboot.pid)
+
       - name: Stop Docker Compose
         if: always()
         run: |
