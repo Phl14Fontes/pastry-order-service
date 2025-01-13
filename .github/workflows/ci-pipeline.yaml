@@ -41,8 +41,6 @@ jobs:
       - name: Run Tests
         run: ./gradlew test
       - name: Start Spring Boot Application
-        env:
-          DATABASE_URL: jdbc:postgresql://postgres:5432/orders_database
         run: ./gradlew bootRun
       - name: Stop Docker Compose
         if: always()

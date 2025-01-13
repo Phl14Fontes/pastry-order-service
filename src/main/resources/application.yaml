@@ -18,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/order_database}
+    url: jdbc:postgresql://localhost:5432/orders_database
     username: admin
     password: admin123
     hikari:
