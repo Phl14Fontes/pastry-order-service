@@ -40,11 +40,14 @@ jobs:
       - name: List files in the docker directory
         run: ls -l docker/
 
-      - name: Start PostgreSQL with Docker Compose
+      - name: Start PostgreSQL and Kafka with Docker Compose
         run: |
           docker-compose -f docker-compose.yaml up -d
         working-directory: ./docker
-
+      - name: Wait for Kafka to be ready
+        run: |
+          echo "Waiting for Kafka to be ready..."
+          sleep 20
       - name: Build with Gradle
         run: ./gradlew clean build
 

@@ -2,6 +2,7 @@ package com.mba.orderservice.application.handler;
 
 import com.mba.orderservice.application.exception.BadRequestException;
 import com.mba.orderservice.application.exception.OrderNotFoundException;
+import com.mba.orderservice.application.exception.PrepareOrderException;
 import com.mba.orderservice.application.exception.UnprocessableEntityException;
 import com.mba.orderservice.infrastructure.adapter.out.exception.*;
 import org.apache.logging.log4j.LogManager;
@@ -44,7 +45,9 @@ public class ControllerExceptionHandler {
             DatabaseSaveOrderItemsException.class,
             DatabaseGetOrderException.class,
             DatabaseGetOrderItemsException.class,
-            DatabaseUpdateOrderStatusException.class
+            DatabaseUpdateOrderStatusException.class,
+            PrepareOrderException.class,
+            RuntimeException.class
     })
     public ResponseEntity<String> handleInternalServerError(RuntimeException ex) {
         String errorMessage = ex.getMessage();

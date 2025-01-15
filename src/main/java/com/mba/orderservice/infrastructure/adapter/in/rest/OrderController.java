@@ -32,9 +32,13 @@ public class OrderController {
     public ResponseEntity<CreateOrderResponseDto> create(@RequestBody CreateOrderRequestDto request) {
         Order order = DtoToModelMapper.toCreateOrderModel(request);
 
-        String correlationId = createUseCase.createOrder(order);
+        Order createdOrder = createUseCase.createOrder(order);
 
-        CreateOrderResponseDto response = new CreateOrderResponseDto(correlationId);
+        CreateOrderResponseDto response = new CreateOrderResponseDto(
+                createdOrder.getCorrelationId(),
+                createdOrder.getName(),
+                createdOrder.getStatus()
+        );
 
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(response);
     }

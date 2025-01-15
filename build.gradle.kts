@@ -30,6 +30,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.kafka:spring-kafka:3.3.1")
 
 	// Slf4J
 	implementation("org.apache.logging.log4j:log4j-api")
