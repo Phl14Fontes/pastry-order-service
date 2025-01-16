@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: orders_database
+
+  order-service:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "7000:7000"
+    links:
+      - postgres

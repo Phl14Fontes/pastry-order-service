@@ -1,5 +1,5 @@
 app:
-  name: orderservice
+  name: order-service
   server:
     port: 7000
   log:
@@ -18,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:postgresql://localhost:5432/orders_database
+    url: jdbc:postgresql://postgres:5432/orders_database
     username: admin
     password: admin123
     hikari:
