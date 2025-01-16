@@ -11,20 +11,10 @@ import lombok.*;
 public class FriedPastryDto {
     Flavor flavor;
     Integer quantity;
-    Float amount;
     String correlationId;
-    String observations;
 
-    public FriedPastryDto(Flavor flavor, Integer quantity, Float amount, String correlationId) {
+    public FriedPastryDto(Flavor flavor, Integer quantity) {
         this.flavor = flavor;
         this.quantity = quantity;
-        this.amount = amount;
-        this.correlationId = correlationId;
-    }
-
-    public FriedPastryDto(Flavor flavor, Integer quantity, Float amount) {
-        this.flavor = flavor;
-        this.quantity = quantity;
-        this.amount = amount;
     }
 }

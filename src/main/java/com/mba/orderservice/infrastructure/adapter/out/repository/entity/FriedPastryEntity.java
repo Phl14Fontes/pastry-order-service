@@ -32,22 +32,9 @@ public class FriedPastryEntity {
     @Positive
     Integer quantity;
 
-    @NotNull
-    Float amount;
-    String observations;
-
-    public FriedPastryEntity(String correlationId, Flavor flavor, Integer quantity, Float amount, String observations) {
+    public FriedPastryEntity(String correlationId, Flavor flavor, Integer quantity) {
         this.correlationId = correlationId;
         this.flavor = flavor;
         this.quantity = quantity;
-        this.amount = amount;
-        this.observations = observations;
-    }
-
-    public FriedPastryEntity(String correlationId, Flavor flavor, Integer quantity, Float amount) {
-        this.correlationId = correlationId;
-        this.flavor = flavor;
-        this.quantity = quantity;
-        this.amount = amount;
     }
 }

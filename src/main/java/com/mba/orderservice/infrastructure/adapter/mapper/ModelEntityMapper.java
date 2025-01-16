@@ -52,8 +52,6 @@ public class ModelEntityMapper {
                         .correlationId(correlationId)
                         .flavor(friedPastry.getFlavor())
                         .quantity(friedPastry.getQuantity())
-                        .amount(friedPastry.getAmount())
-                        .observations(friedPastry.getObservations())
                         .build()
                 )
                 .toList();

@@ -14,13 +14,9 @@ public class FriedPastry {
     Flavor flavor;
     Integer quantity;
     String correlationId;
-    Float amount;
-    String observations;
 
-    public FriedPastry(Flavor flavor, Integer quantity, String correlationId, Float amount) {
+    public FriedPastry(Flavor flavor, Integer quantity) {
         this.flavor = flavor;
         this.quantity = quantity;
-        this.correlationId = correlationId;
-        this.amount = amount;
     }
 }

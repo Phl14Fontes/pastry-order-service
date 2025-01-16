@@ -4,6 +4,7 @@ import com.mba.orderservice.domain.model.FriedPastry;
 import com.mba.orderservice.domain.model.Order;
 import com.mba.orderservice.infrastructure.adapter.out.repository.entity.FriedPastryEntity;
 import com.mba.orderservice.infrastructure.adapter.out.repository.entity.OrderEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,28 +43,16 @@ public class EntityModelMapper {
     }
 
 
-
     public static List<FriedPastry> entityOrderItemsListToModelList(List<FriedPastryEntity> entities) {
         if (entities.isEmpty()) return List.of();
 
         return entities.stream()
                 .map(entity -> {
-                    if (entity.getObservations() == null) {
-                        return new FriedPastry(
-                                entity.getFlavor(),
-                                entity.getQuantity(),
-                                entity.getCorrelationId(),
-                                entity.getAmount()
-                        );
-                    } else {
-                        return new FriedPastry(
-                                entity.getFlavor(),
-                                entity.getQuantity(),
-                                entity.getCorrelationId(),
-                                entity.getAmount(),
-                                entity.getObservations()
-                        );
-                    }
+                    return new FriedPastry(
+                            entity.getFlavor(),
+                            entity.getQuantity(),
+                            entity.getCorrelationId()
+                    );
                 })
                 .collect(Collectors.toList());
     }

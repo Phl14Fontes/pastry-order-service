@@ -19,6 +19,7 @@ public class DtoToModelMapper {
 
         List<FriedPastry> friedPastries = toFriedPastryModelList(dto.getFriedPastries());
         Float totalAmount = calculateTotalAmount(friedPastries);
+        log.info(totalAmount.toString());
 
         return new Order(dto.getName(), dto.getPaymentMethod(), OrderStatus.IN_PROGRESS, friedPastries, totalAmount);
     }
@@ -27,7 +28,7 @@ public class DtoToModelMapper {
         List<FriedPastry> friedPastries = new ArrayList<>();
 
         for (FriedPastryDto dto : dtoList) {
-            FriedPastry friedPastry = new FriedPastry(dto.getFlavor(), dto.getQuantity(), dto.getCorrelationId(), dto.getAmount(), dto.getObservations());
+            FriedPastry friedPastry = new FriedPastry(dto.getFlavor(), dto.getQuantity());
             friedPastries.add(friedPastry);
         }
 
@@ -41,7 +42,7 @@ public class DtoToModelMapper {
 
     private static Float calculateTotalAmount(List<FriedPastry> friedPastries) {
         return friedPastries.stream()
-                .map(friedPastry -> friedPastry.getAmount() * friedPastry.getQuantity())
+                .map(friedPastry -> friedPastry.getFlavor().getUnitPrice() * friedPastry.getQuantity())
                 .reduce(0.0F, Float::sum);
     }
 }
