@@ -1,10 +1,9 @@
 package com.mba.orderservice.application.dto.response;
 
-import com.mba.orderservice.domain.enums.Flavor;
+import com.mba.orderservice.application.dto.AvailableFriedPastryDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -12,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RetrieveMenuResponseDto {
-    List<Flavor> availableMenu;
+    List<AvailableFriedPastryDto> availableMenu;
 }

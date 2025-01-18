@@ -1,6 +1,8 @@
 package com.mba.orderservice.infrastructure.adapter.in.rest;
 
+import com.mba.orderservice.application.dto.AvailableFriedPastryDto;
 import com.mba.orderservice.application.dto.response.RetrieveMenuResponseDto;
+import com.mba.orderservice.application.mapper.ModelToDtoMapper;
 import com.mba.orderservice.application.port.in.RetrieveMenuUseCase;
 import com.mba.orderservice.domain.enums.Flavor;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,9 @@ public class MenuController {
     public ResponseEntity<RetrieveMenuResponseDto> getMenu() {
         List<Flavor> flavors = useCase.getMenu();
 
-        return ResponseEntity.status(HttpStatus.OK.value()).body(new RetrieveMenuResponseDto(flavors));
+        List<AvailableFriedPastryDto> availableFriedPastries = ModelToDtoMapper.fromFlavors(flavors);
+
+        return ResponseEntity.status(HttpStatus.OK.value()).body(new RetrieveMenuResponseDto(availableFriedPastries));
     }
 
 }

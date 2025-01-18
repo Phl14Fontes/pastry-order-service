@@ -1,7 +1,9 @@
 package com.mba.orderservice.application.mapper;
 
+import com.mba.orderservice.application.dto.AvailableFriedPastryDto;
 import com.mba.orderservice.application.dto.response.AllOrdersResponseDto;
 import com.mba.orderservice.application.dto.response.OrderResponseDto;
+import com.mba.orderservice.domain.enums.Flavor;
 import com.mba.orderservice.domain.model.Order;
 
 import java.util.List;
@@ -57,5 +59,17 @@ public class ModelToDtoMapper {
                 order.getCreatedAt(),
                 order.getUpdatedAt()
         );
+    }
+
+    public static List<AvailableFriedPastryDto> fromFlavors(List<Flavor> flavors) {
+        return flavors.stream()
+                .map(flavor ->
+                        new AvailableFriedPastryDto(
+                                flavor,
+                                flavor.getUnitPrice(),
+                                flavor.getDescription()
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }
