@@ -1,0 +1,44 @@
+app:
+  name: order-service
+  server:
+    port: 7000
+  log:
+    level: INFO
+  metrics:
+    port: 7000
+
+server:
+  port: ${app.server.port}
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://postgres:5432/orders_database
+    username: admin
+    password: admin123
+    hikari:
+      maximum-pool-size: 5
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.add.type.headers: false
+      spring.json.value.default.type: com.mba.orderservice.application.dto.DoneOrderEventDto
+      template:
+        default-topic: done-orders-topic
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    operations-sorter: method
+    path: /docs
+    enabled: true
+  packages-to-scan: com.mba.orderservice.infrastructure.adapter.in.rest
