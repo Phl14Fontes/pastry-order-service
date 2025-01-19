@@ -29,6 +29,8 @@ public class UpdateOrderService implements UpdateOrderStatusUseCase {
 
         repository.updateStatusByCorrelationId(status, order.getCorrelationId());
 
+        logger.info("Order with correlation id [{}] updated to status [{}] successfully", correlationId, status);
+
         sendEvent(correlationId, order.getName());
     }
 

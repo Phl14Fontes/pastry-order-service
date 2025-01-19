@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class KafkaProducerAdapter implements MessageProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Value("${spring.kafka.properties.template.default-topic}")
     private String ordersTopic;

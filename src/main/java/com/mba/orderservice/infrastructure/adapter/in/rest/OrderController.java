@@ -13,6 +13,8 @@ import com.mba.orderservice.application.port.in.GetOrdersUseCase;
 import com.mba.orderservice.application.port.in.UpdateOrderStatusUseCase;
 import com.mba.orderservice.domain.model.Order;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<CreateOrderResponseDto> create(@RequestBody CreateOrderRequestDto request) {
+        logger.info("Request to create order received: [{}]", request);
+
         Order order = DtoToModelMapper.toCreateOrderModel(request);
 
         Order createdOrder = createUseCase.createOrder(order);
@@ -69,6 +73,8 @@ public class OrderController {
 
     @PatchMapping
     public ResponseEntity<Void> updateStatus(@RequestBody UpdateOrderStatusRequestDto request) {
+        logger.info("Request to update order status received: [{}]", request);
+
         try {
             updateStatusUseCase.updateStatus(request.getStatus(), request.getCorrelationId());
         } catch (OrderNotFoundException ex) {
@@ -88,4 +94,6 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
+
+    private static final Logger logger = LogManager.getLogger(OrderController.class.getName());
 }
