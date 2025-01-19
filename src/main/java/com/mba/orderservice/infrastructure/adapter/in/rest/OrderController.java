@@ -23,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OrderController {
 
