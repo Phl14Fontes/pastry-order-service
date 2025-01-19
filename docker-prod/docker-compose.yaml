@@ -1,3 +1,8 @@
+networks:
+  mynetwork:
+    driver: bridge
+
+
 services:
   postgres:
     image: postgres:15
@@ -10,6 +15,8 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: orders_database
+    networks:
+      - mynetwork
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.2
@@ -19,6 +26,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    networks:
+      - mynetwork
 
   kafka:
     image: confluentinc/cp-kafka:7.3.2
@@ -35,12 +44,16 @@ services:
       - "9092:9092"
     expose:
       - "9092"
+    networks:
+      - mynetwork
 
   notification:
     image: karlanascimento/notification-service-worker:latest
     container_name: notification-service
     depends_on:
       - kafka
+    networks:
+      - mynetwork
 
   order-service:
     image: phfontess/pastry-order-service:latest
@@ -54,3 +67,15 @@ services:
       - "7000"
     links:
       - postgres
+    networks:
+      - mynetwork
+
+  pastry-interface:
+    image: victor0777/web-pastry-service:v9
+    container_name: web-pastry-service-interface
+    ports:
+      - "5173:80"
+    depends_on:
+      - order-service
+    networks:
+      - mynetwork
