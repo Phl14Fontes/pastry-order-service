@@ -19,7 +19,6 @@ public class DtoToModelMapper {
 
         List<FriedPastry> friedPastries = toFriedPastryModelList(dto.getFriedPastries());
         Float totalAmount = calculateTotalAmount(friedPastries);
-        log.info(totalAmount.toString());
 
         return new Order(dto.getName(), dto.getPaymentMethod(), OrderStatus.IN_PROGRESS, friedPastries, totalAmount);
     }

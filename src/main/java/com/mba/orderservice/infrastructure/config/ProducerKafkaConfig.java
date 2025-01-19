@@ -22,7 +22,7 @@ public class ProducerKafkaConfig {
     private KafkaProperties kafkaProperties;
 
     @Value("${spring.kafka.properties.template.default-topic}")
-    private String ordersTopic;
+    private final String ordersTopic;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
