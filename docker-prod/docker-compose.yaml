@@ -43,7 +43,7 @@ services:
       - kafka
 
   order-service:
-    image: phfontess/pastry-order-service:v2
+    image: phfontess/pastry-order-service:latest
     container_name: order-service
     depends_on:
       - postgres
