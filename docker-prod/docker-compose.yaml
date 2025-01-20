@@ -48,7 +48,7 @@ services:
       - mynetwork
 
   notification:
-    image: karlanascimento/notification-service-worker:latest
+    image: phfontess/notification-service-worker:latest
     container_name: notification-service
     depends_on:
       - kafka
